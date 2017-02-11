@@ -1,5 +1,3 @@
-# Contributor: Thomas Baechler <thomas@archlinux.org>
-
 ### BUILD OPTIONS
 # Set these variables to ANYTHING that is not null to enable them
 
@@ -11,7 +9,7 @@ _makenconfig=y
 # to enabled ... in other words, do not use NUMA on a single CPU system.
 #
 # See, https://bugs.archlinux.org/task/31187
-_NUMAdisable=
+_NUMAdisable=y
 
 # Compile ONLY probed modules
 # As of mainline 2.6.32, running with this option will only build the modules
@@ -42,13 +40,13 @@ _use_current=
 
 ### Do no edit below this line unless you know what you're doing
 
-pkgbase=linux-ck-haswell-vfio
+pkgbase=linux-c0mbine
 _srcname=linux-4.9
 pkgver=4.9.9
 pkgrel=1
 _ckpatchversion=1
 arch=('x86_64')
-url="https://wiki.archlinux.org/index.php/Linux-ck"
+url="https://github.com/f4bio/linux-c0mbine"
 license=('GPL2')
 makedepends=('kmod' 'inetutils' 'bc' 'libelf')
 options=('!strip')
@@ -77,7 +75,7 @@ sha256sums=('029098dcffab74875e086ae970e3828456838da6e0ba22ce3f64ef764f3d7f1a'
             'SKIP'
             '5b9d8f4ef73f87e8595de66ccc38bad86e290fd9453bd536b9cc950f5344b82d'
             'c26b4b76ca3b3dc864e1470001b46f65e007252e984e9b3c6cc8e90a18b7317f'
-            '2a7cfe8282bc78242bb16599f946c04fc259e9edc253c18a0548eb4aa05aad81'
+            '08759aae8edf2b16942ac3bd762925cff215a86b1678575d8ea97052a348d8d8'
             '834bd254b56ab71d73f59b3221f056c72f559553c04718e350ab2a3e2991afe0'
             'a80941c255322b4bcb622027845366b57fa28a61f766d5b916d551286b5f2753'
             '1256b241cd477b265a3c2d64bdc19ffe3c9bbcee82ea3994c590c2c76e767d99'
@@ -228,12 +226,10 @@ build() {
 }
 
 _package() {
-  pkgdesc="The ${pkgbase/linux/Linux} kernel and modules with the ck1 patchset featuring MuQSS CPU scheduler v0.150"
-  #_Kpkgdesc="The ${pkgbase/linux/Linux} kernel and modules with the ck1 patchset featuring MuQSS CPU scheduler v0.150"
-  #pkgdesc="${_Kpkgdesc}"
+  pkgdesc="The ${pkgbase/linux/Linux} kernel and modules with ck1 / vfio / wireguard patches"
   depends=('coreutils' 'linux-firmware' 'kmod' 'mkinitcpio>=0.7')
   optdepends=('crda: to set the correct wireless channels of your country')
-  provides=("linux-ck-haswell-vfio=${pkgver}")
+  provides=("linux-c0mbine=${pkgver}")
   backup=("etc/mkinitcpio.d/${pkgbase}.preset")
   install=linux.install
   #groups=('ck-generic')
@@ -289,8 +285,8 @@ _package-headers() {
   pkgdesc="Header files and scripts for building modules for ${pkgbase/linux/Linux} kernel"
   #_Hpkgdesc="Header files and scripts for building modules for ${pkgbase/linux/Linux} kernel"
   #pkgdesc="${_Hpkgdesc}"
-  depends=('linux-ck-haswell-vfio') # added to keep kernel and headers packages matched
-  provides=("linux-ck-haswell-vfio-headers=${pkgver}" "linux-headers=${pkgver}")
+  depends=('linux-c0mbine') # added to keep kernel and headers packages matched
+  provides=("linux-c0mbine-headers=${pkgver}" "linux-headers=${pkgver}")
   #groups=('ck-generic')
 
   install -dm755 "${pkgdir}/usr/lib/modules/${_kernver}"
