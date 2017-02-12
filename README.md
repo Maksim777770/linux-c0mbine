@@ -6,6 +6,7 @@
   * not in use (but everything compiled just fine)
 * changed parameters to [wireguard](https://www.wireguard.io/install)'s requirements
   * `wireguard, 0.0.20170115, 4.9.9-1-c0mbine, x86_64: installed`
+* enabled f2fs on module basis
 
 ### credits / thanks
 * Con Kolivas [@ckolivas](https://github.com/ckolivas) for -ck

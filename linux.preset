@@ -1,8 +1,8 @@
 # mkinitcpio preset file for the '%PKGBASE%' package
 
-ALL_config="/etc/mkinitcpio-%PKGBASE%.conf"
-ALL_kver="/boot/vmlinuz-ck-haswell-vfio"
-``
+ALL_config="/etc/mkinitcpio.conf"
+ALL_kver="/boot/vmlinuz-%PKGBASE%"
+
 PRESETS=('default' 'fallback')
 
 #default_config="/etc/mkinitcpio-%PKGBASE%.conf"
