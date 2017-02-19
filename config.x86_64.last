@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/x86 4.9.9-1 Kernel Configuration
+# Linux/x86 4.9.11-1 Kernel Configuration
 #
 CONFIG_64BIT=y
 CONFIG_X86_64=y
@@ -4553,7 +4553,7 @@ CONFIG_NLS_ISO8859_1=m
 # CONFIG_NLS_MAC_INUIT is not set
 # CONFIG_NLS_MAC_ROMANIAN is not set
 # CONFIG_NLS_MAC_TURKISH is not set
-# CONFIG_NLS_UTF8 is not set
+CONFIG_NLS_UTF8=y
 # CONFIG_DLM is not set
 
 #

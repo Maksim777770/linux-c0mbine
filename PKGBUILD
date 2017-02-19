@@ -42,7 +42,7 @@ _use_current=
 
 pkgbase=linux-c0mbine
 _srcname=linux-4.9
-pkgver=4.9.9
+pkgver=4.9.11
 pkgrel=1
 _ckpatchversion=1
 arch=('x86_64')
@@ -71,11 +71,11 @@ source=("http://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         )
 sha256sums=('029098dcffab74875e086ae970e3828456838da6e0ba22ce3f64ef764f3d7f1a'
             'SKIP'
-            'ec97e3bf8585865d409a804316b276a6b4e4939286de9757f99bfb41cf112078'
+            '23e773a670f3cac11a92c4e442405dea6d2c28fea0f914ea2ba4bea313c26541'
             'SKIP'
             '5b9d8f4ef73f87e8595de66ccc38bad86e290fd9453bd536b9cc950f5344b82d'
             'c26b4b76ca3b3dc864e1470001b46f65e007252e984e9b3c6cc8e90a18b7317f'
-            '59d3be066a35c0f15b090b508f40bd2049828eb86c420b220782dd228822614a' # config.x86_64
+            'a0380322835520a57be6e6d2c2e0a8800e671651b5ec750fadb538fd9356c6d0' # config.x86_64
             '834bd254b56ab71d73f59b3221f056c72f559553c04718e350ab2a3e2991afe0'
             'daeb2af67462af853adee86fb8bccef777189bbb26c6445930b47efcbbd84e48'
             '1256b241cd477b265a3c2d64bdc19ffe3c9bbcee82ea3994c590c2c76e767d99'
