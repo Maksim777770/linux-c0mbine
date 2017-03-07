@@ -75,7 +75,7 @@ sha256sums=('029098dcffab74875e086ae970e3828456838da6e0ba22ce3f64ef764f3d7f1a'
             'SKIP'
             '5b9d8f4ef73f87e8595de66ccc38bad86e290fd9453bd536b9cc950f5344b82d'
             'c26b4b76ca3b3dc864e1470001b46f65e007252e984e9b3c6cc8e90a18b7317f'
-            'a0380322835520a57be6e6d2c2e0a8800e671651b5ec750fadb538fd9356c6d0' # config.x86_64
+            'd7552e3e8e84b49f6aa3f3cd36f65c02236c3001754949f4d13fce868ecd5063' # config.x86_64
             '834bd254b56ab71d73f59b3221f056c72f559553c04718e350ab2a3e2991afe0'
             'daeb2af67462af853adee86fb8bccef777189bbb26c6445930b47efcbbd84e48'
             '1256b241cd477b265a3c2d64bdc19ffe3c9bbcee82ea3994c590c2c76e767d99'
@@ -122,6 +122,10 @@ prepare() {
   # patches for vga arbiter fix in intel systems
   echo '==> Applying i915 VGA arbitration patch'
   patch -p1 -i "${srcdir}/i915-vga-arbiter.patch"
+
+  # Overrides for missing acs capabilities
+  echo '==> Applying ACS override patch'
+  patch -p1 -i "${srcdir}/add-acs-overrides.patch"
 
   # Overrides for missing acs capabilities
   echo '==> Applying ACS override patch'
