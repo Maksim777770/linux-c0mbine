@@ -23,7 +23,7 @@ _NUMAdisable=y
 # This PKGBUILD will call it directly to probe all the modules you have logged!
 #
 # More at this wiki page ---> https://wiki.archlinux.org/index.php/Modprobed-db
-_localmodcfg=y
+_localmodcfg=
 
 # Alternative I/O scheduler by Paolo Valente
 # Set this if you want it enabled globally i.e. for all devices in your system
@@ -41,22 +41,22 @@ _use_current=
 ### Do no edit below this line unless you know what you're doing
 
 pkgbase=linux-c0mbine
-_srcname=linux-4.9
-pkgver=4.9.11
+_srcname=linux-4.10
+pkgver=4.10.1
 pkgrel=1
 _ckpatchversion=1
 arch=('x86_64')
 url="https://github.com/f4bio/linux-c0mbine"
 license=('GPL2')
-makedepends=('kmod' 'inetutils' 'bc' 'libelf')
+makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'libelf')
 options=('!strip')
-_ckpatchname="patch-4.9-ck${_ckpatchversion}"
+_ckpatchname="patch-4.10-ck${_ckpatchversion}"
 _gcc_patch='enable_additional_cpu_optimizations_for_gcc_v4.9+_kernel_v3.15+.patch'
 source=("http://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         "https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.sign"
         "http://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
         "https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.sign"
-        "http://ck.kolivas.org/patches/4.0/4.9/4.9-ck${_ckpatchversion}/${_ckpatchname}.xz"
+        "http://ck.kolivas.org/patches/4.0/4.10/4.10-ck${_ckpatchversion}/${_ckpatchname}.xz"
         "http://repo-ck.com/source/gcc_patch/${_gcc_patch}.gz"
         # the main kernel config files
         'config.x86_64'
@@ -67,25 +67,26 @@ source=("http://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         'change-default-console-loglevel.patch'
         'add-acs-overrides.patch'
         'i915-vga-arbiter.patch'
-        '0001-x86-fpu-Fix-invalid-FPU-ptrace-state-after-execve.patch'
-        )
-sha256sums=('029098dcffab74875e086ae970e3828456838da6e0ba22ce3f64ef764f3d7f1a'
-            'SKIP'
-            '23e773a670f3cac11a92c4e442405dea6d2c28fea0f914ea2ba4bea313c26541'
-            'SKIP'
-            '5b9d8f4ef73f87e8595de66ccc38bad86e290fd9453bd536b9cc950f5344b82d'
-            'c26b4b76ca3b3dc864e1470001b46f65e007252e984e9b3c6cc8e90a18b7317f'
-            'd7552e3e8e84b49f6aa3f3cd36f65c02236c3001754949f4d13fce868ecd5063' # config.x86_64
-            '834bd254b56ab71d73f59b3221f056c72f559553c04718e350ab2a3e2991afe0'
-            'daeb2af67462af853adee86fb8bccef777189bbb26c6445930b47efcbbd84e48'
-            '1256b241cd477b265a3c2d64bdc19ffe3c9bbcee82ea3994c590c2c76e767d99'
-            'd36c589e3866535a9ac92911be64795967a05a6d300cc8b70abb79ea24b7b393'
-            'a8337dc3d4ae977be091d2cfe9edb5769b9548c78ed67ebd6ab03029059c9e49'
-            '3e955e0f1aae96bb6c1507236adc952640c9bd0a134b9995ab92106a33dc02d9')
+        '0001-x86-fpu-Fix-invalid-FPU-ptrace-state-after-execve.patch')
+sha256sums=(
+    '3c95d9f049bd085e5c346d2c77f063b8425f191460fcd3ae9fe7e94e0477dc4b'
+    'SKIP'
+    'da560125aa350f76f0e4a5b9373a0d0a1c27ccefe3b7bd9231724f3a3c4ebb9e'
+    'SKIP'
+    '1913eeb921bbef3733b53f4004a3013289fa85a26409610bb14fcff3bbd7ef72' # patch-4.10-ck1.xz
+    'c26b4b76ca3b3dc864e1470001b46f65e007252e984e9b3c6cc8e90a18b7317f'
+    '5e58e004cbefd82f2ab943c5d59f911e0bf6f8c739ca80391a991b99fda99458' # config.x86_64
+    '834bd254b56ab71d73f59b3221f056c72f559553c04718e350ab2a3e2991afe0'
+    'daeb2af67462af853adee86fb8bccef777189bbb26c6445930b47efcbbd84e48'
+    '1256b241cd477b265a3c2d64bdc19ffe3c9bbcee82ea3994c590c2c76e767d99'
+    '773b2a7db63dbc38336e04e25d5017a2a02c49e424cfa32beedb4e47a5027d2c' # add-acs-overrides.patch
+    '0bef31f6d1415398cb2e78d58798aa49e146b27c87764da181b6d41bd4e577eb' # i915-vga-arbiter.patch
+    '3e955e0f1aae96bb6c1507236adc952640c9bd0a134b9995ab92106a33dc02d9'
+  )
 validpgpkeys=(
-              'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linus Torvalds
-              '647F28654894E3BD457199BE38DBBDC86092693E' # Greg Kroah-Hartman
-             )
+    'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linus Torvalds
+    '647F28654894E3BD457199BE38DBBDC86092693E' # Greg Kroah-Hartman
+  )
 
 _kernelname=${pkgbase#linux}
 
@@ -93,42 +94,39 @@ prepare() {
   cd "${srcdir}/${_srcname}"
 
   # add upstream patch
-  echo '==> Applying upstream patch'
+  msg "==> Applying upstream patch"
   patch -p1 -i "${srcdir}/patch-${pkgver}"
 
   # Revert a commit that causes memory corruption in i686 chroots on our
   # build server ("valgrind bash" immediately crashes)
   # https://bugzilla.kernel.org/show_bug.cgi?id=190061
+  msg "==> Applying x86-fpu-Fix-invalid-FPU-ptrace-state-after-execve patch"
   patch -Rp1 -i "${srcdir}/0001-x86-fpu-Fix-invalid-FPU-ptrace-state-after-execve.patch"
 
   # set DEFAULT_CONSOLE_LOGLEVEL to 4 (same value as the 'quiet' kernel param)
   # remove this when a Kconfig knob is made available by upstream
   # (relevant patch sent upstream: https://lkml.org/lkml/2011/7/26/227)
-  echo '==> Applying x86-fpu-Fix-invalid-FPU-ptrace-state-after-execve patch'
-  patch -p1 -i "${srcdir}/change-default-console-loglevel.patch"
+  #msg "==> Applying change-default-console-loglevel patch"
+  #patch -p1 -i "${srcdir}/change-default-console-loglevel.patch"
 
   # fix naming schema in EXTRAVERSION of ck patch set
   sed -i -re "s/^(.EXTRAVERSION).*$/\1 = /" "${srcdir}/${_ckpatchname}"
 
   # Patch source with ck patchset
-  echo '==> Applying ck patch'
+  msg "==> Applying ck patch"
   patch -Np1 -i "${srcdir}/${_ckpatchname}"
 
   # Patch source to unlock additional gcc CPU optimizatons
   # https://github.com/graysky2/kernel_gcc_patch
-  echo '==> Applying kernel_gcc_patch patch'
+  msg "==> Applying kernel_gcc_patch patch"
   patch -Np1 -i "${srcdir}/${_gcc_patch}"
 
   # patches for vga arbiter fix in intel systems
-  echo '==> Applying i915 VGA arbitration patch'
+  msg "==> Applying i915 VGA arbitration patch"
   patch -p1 -i "${srcdir}/i915-vga-arbiter.patch"
 
   # Overrides for missing acs capabilities
-  echo '==> Applying ACS override patch'
-  patch -p1 -i "${srcdir}/add-acs-overrides.patch"
-
-  # Overrides for missing acs capabilities
-  echo '==> Applying ACS override patch'
+  msg "==> Applying ACS override patch"
   patch -p1 -i "${srcdir}/add-acs-overrides.patch"
 
   # Clean tree and copy ARCH config over
