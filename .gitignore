@@ -4,5 +4,6 @@ linux.install.pkg
 *.xz
 *.sign
 *.src.tar.gz
+*.patch.gz
 *.log
 *.part

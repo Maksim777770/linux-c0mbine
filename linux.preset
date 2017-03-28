@@ -6,9 +6,9 @@ ALL_kver="/boot/vmlinuz-%PKGBASE%"
 PRESETS=('default' 'fallback')
 
 #default_config="/etc/mkinitcpio-%PKGBASE%.conf"
-default_image="/boot/initramfs-ck-haswell-vfio.img"
+default_image="/boot/initramfs-%PKGBASE%.img"
 #default_options=""
 
 #fallback_config="/etc/mkinitcpio-%PKGBASE%.conf"
-fallback_image="/boot/initramfs-ck-haswell-vfio-fallback.img"
+fallback_image="/boot/initramfs-%PKGBASE%-fallback.img"
 fallback_options="-S autodetect"
