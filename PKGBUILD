@@ -42,7 +42,7 @@ _use_current=
 
 pkgbase=linux-c0mbine
 _srcname=linux-4.10
-pkgver=4.10.5
+pkgver=4.10.12
 pkgrel=1
 _ckpatchversion=1
 arch=('x86_64')
@@ -52,9 +52,9 @@ makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'libelf')
 options=('!strip')
 _ckpatchname="patch-4.10-ck${_ckpatchversion}"
 _gcc_patch='enable_additional_cpu_optimizations_for_gcc_v4.9+_kernel_v3.15+.patch'
-source=("http://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
+source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         "https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.sign"
-        "http://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
+        "https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
         "https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.sign"
         "http://ck.kolivas.org/patches/4.0/4.10/4.10-ck${_ckpatchversion}/${_ckpatchname}.xz"
         "http://repo-ck.com/source/gcc_patch/${_gcc_patch}.gz"
@@ -68,16 +68,15 @@ source=("http://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         'add-acs-overrides.patch'
         'i915-vga-arbiter.patch')
 sha256sums=(
-    '3c95d9f049bd085e5c346d2c77f063b8425f191460fcd3ae9fe7e94e0477dc4b'
+    '3c95d9f049bd085e5c346d2c77f063b8425f191460fcd3ae9fe7e94e0477dc4b' # ${_srcname}.tar.xz
     'SKIP'
-    '03c64409653b19d39af54c8781fde0a3747ba16577c9e5b0e1031e5d8fc29db6' # patch-4.10.5.xz
+    'ed919b49178bbda14b341058a92362322cbb09e9028229e860e6927553c8d037' # patch-${pkgver}.xz
     'SKIP'
     '1913eeb921bbef3733b53f4004a3013289fa85a26409610bb14fcff3bbd7ef72' # patch-4.10-ck1.xz
-    'c26b4b76ca3b3dc864e1470001b46f65e007252e984e9b3c6cc8e90a18b7317f' # gcc_patch.gz
-    '5e58e004cbefd82f2ab943c5d59f911e0bf6f8c739ca80391a991b99fda99458' # config.x86_64
+    '0f3e4930c3a603cc99fffa9fcac0f2cf7c58fc14a7ef8557345358c0bcd2bf66' # gcc_patch.gz
+    '8e021c0aa0aae4bf0217c44ba3451552085b20f9a036e1d965788ffe406c6567' # config.x86_64
     '8f407ad5ff6eff106562ba001c36a281134ac9aa468a596aea660a4fe1fd60b5' # 99-linux.hook
     '2fa4e5a6449b8b17a6d69fe838966d93fc42f61485ec8de68cbca39385a25625' # linux.preset
-    # '1256b241cd477b265a3c2d64bdc19ffe3c9bbcee82ea3994c590c2c76e767d99'
     '773b2a7db63dbc38336e04e25d5017a2a02c49e424cfa32beedb4e47a5027d2c' # add-acs-overrides.patch
     '0bef31f6d1415398cb2e78d58798aa49e146b27c87764da181b6d41bd4e577eb' # i915-vga-arbiter.patch
   )
@@ -116,8 +115,8 @@ prepare() {
 
   # Patch source to unlock additional gcc CPU optimizatons
   # https://github.com/graysky2/kernel_gcc_patch
-  #msg "==> Applying kernel_gcc_patch patch"
-  #patch -Np1 -i "${srcdir}/${_gcc_patch}"
+  msg "==> Applying kernel_gcc_patch patch"
+  patch -Np1 -i "${srcdir}/${_gcc_patch}"
 
   # patches for vga arbiter fix in intel systems
   msg "==> Applying i915 VGA arbitration patch"
