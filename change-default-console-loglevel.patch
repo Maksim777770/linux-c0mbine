@@ -8,4 +8,3 @@
 +#define CONSOLE_LOGLEVEL_DEFAULT 4 /* anything MORE serious than KERN_DEBUG */
  #define CONSOLE_LOGLEVEL_DEBUG	10 /* issue debug messages */
  #define CONSOLE_LOGLEVEL_MOTORMOUTH 15	/* You can't shut this one up */
- 

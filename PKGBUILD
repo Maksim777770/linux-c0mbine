@@ -41,8 +41,8 @@ _use_current=
 ### Do no edit below this line unless you know what you're doing
 
 pkgbase=linux-c0mbine
-_srcname=linux-4.10
-pkgver=4.10.12
+_srcname=linux-4.11
+pkgver=4.11.6
 pkgrel=1
 _ckpatchversion=1
 arch=('x86_64')
@@ -50,35 +50,42 @@ url="https://github.com/f4bio/linux-c0mbine"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'libelf')
 options=('!strip')
-_ckpatchname="patch-4.10-ck${_ckpatchversion}"
+_ckpatchname="patch-4.11-ck${_ckpatchversion}"
 _gcc_patch='enable_additional_cpu_optimizations_for_gcc_v4.9+_kernel_v3.15+.patch'
 source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         "https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.sign"
         "https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
         "https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.sign"
-        "http://ck.kolivas.org/patches/4.0/4.10/4.10-ck${_ckpatchversion}/${_ckpatchname}.xz"
+        "http://ck.kolivas.org/patches/4.0/4.11/4.11-ck${_ckpatchversion}/${_ckpatchname}.xz"
         "http://repo-ck.com/source/gcc_patch/${_gcc_patch}.gz"
         # the main kernel config files
         'config.x86_64'
         # pacman hook for initramfs regeneration
-        '99-linux.hook'
+        '90-linux.hook'
         # standard config files for mkinitcpio ramdisk
         'linux.preset'
         # 'change-default-console-loglevel.patch'
         'add-acs-overrides.patch'
-        'i915-vga-arbiter.patch')
+        'i915-vga-arbiter.patch'
+				CVE-2017-1000364.mm-larger-stack-guard-gap-between-vmas.patch
+        CVE-2017-1000364.mm-fix-new-crash-in-unmapped_area_topdown.patch
+        CVE-2017-1000364.fixup.allow-stack-to-grow-up-to-address-space-limit.patch
+	)
 sha256sums=(
-    '3c95d9f049bd085e5c346d2c77f063b8425f191460fcd3ae9fe7e94e0477dc4b' # ${_srcname}.tar.xz
+    'b67ecafd0a42b3383bf4d82f0850cbff92a7e72a215a6d02f42ddbafcf42a7d6'	# ${_srcname}.tar.xz
     'SKIP'
-    'ed919b49178bbda14b341058a92362322cbb09e9028229e860e6927553c8d037' # patch-${pkgver}.xz
+    '00c0b804ccda18d6ed4a32ba0be049a80363aa2bc084733a22da03f435d992a4'	# patch-${pkgver}.xz
     'SKIP'
-    '1913eeb921bbef3733b53f4004a3013289fa85a26409610bb14fcff3bbd7ef72' # patch-4.10-ck1.xz
-    '0f3e4930c3a603cc99fffa9fcac0f2cf7c58fc14a7ef8557345358c0bcd2bf66' # gcc_patch.gz
-    '8e021c0aa0aae4bf0217c44ba3451552085b20f9a036e1d965788ffe406c6567' # config.x86_64
-    '8f407ad5ff6eff106562ba001c36a281134ac9aa468a596aea660a4fe1fd60b5' # 99-linux.hook
-    '2fa4e5a6449b8b17a6d69fe838966d93fc42f61485ec8de68cbca39385a25625' # linux.preset
-    '773b2a7db63dbc38336e04e25d5017a2a02c49e424cfa32beedb4e47a5027d2c' # add-acs-overrides.patch
-    '0bef31f6d1415398cb2e78d58798aa49e146b27c87764da181b6d41bd4e577eb' # i915-vga-arbiter.patch
+    'd5903ed77b33984720e2178d34f8db287f6c274b7f1a30b4f28306b71a0bc3f1'	# patch-4.11-ck1.xz
+    '0f3e4930c3a603cc99fffa9fcac0f2cf7c58fc14a7ef8557345358c0bcd2bf66'	# gcc_patch.gz
+    'bc276437df398af92c4ddbdb0d2a07e30ebe0063028e04e62b551284d67a11fb'	# config.x86_64
+    '834bd254b56ab71d73f59b3221f056c72f559553c04718e350ab2a3e2991afe0'	# 90-linux.hook
+    '2fa4e5a6449b8b17a6d69fe838966d93fc42f61485ec8de68cbca39385a25625'	# linux.preset
+    '773b2a7db63dbc38336e04e25d5017a2a02c49e424cfa32beedb4e47a5027d2c'	# add-acs-overrides.patch
+    'e82ea0c7752b5845655043bb209e39ca3a9fe9c0841b100a5d182261c1ab7068'	# i915-vga-arbiter.patch
+		'e1b6a237894fb9e7bf142eb97b5e53c2e46a15ff69ef11593007f254b9faa160'	# CVE-2017-1000364.mm-larger-stack-guard-gap-between-vmas.patch
+    'beede1721c92bae39049be5bcb30e4274406dc53c41436bf75bd44238ee8efe4'	# CVE-2017-1000364.mm-fix-new-crash-in-unmapped_area_topdown.patch
+    'de9c4f81b51c497de930b365f63633a005e3b8bcfbb21be93fe0cbab84ed9f76'	# CVE-2017-1000364.fixup.allow-stack-to-grow-up-to-address-space-limit.patch
   )
 validpgpkeys=(
     'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linus Torvalds
@@ -91,8 +98,14 @@ prepare() {
   cd "${srcdir}/${_srcname}"
 
   # add upstream patch
-  msg "==> Applying upstream patch"
+  msg "Applying upstream patch"
   patch -p1 -i "${srcdir}/patch-${pkgver}"
+
+	# security patches
+	msg "Applying security patches"
+  patch -p1 < "${srcdir}/CVE-2017-1000364.mm-larger-stack-guard-gap-between-vmas.patch"
+  patch -p1 < "${srcdir}/CVE-2017-1000364.mm-fix-new-crash-in-unmapped_area_topdown.patch"
+  patch -p1 < "${srcdir}/CVE-2017-1000364.fixup.allow-stack-to-grow-up-to-address-space-limit.patch"
 
   # Revert a commit that causes memory corruption in i686 chroots on our
   # build server ("valgrind bash" immediately crashes)
@@ -107,23 +120,24 @@ prepare() {
   #patch -p1 -i "${srcdir}/change-default-console-loglevel.patch"
 
   # fix naming schema in EXTRAVERSION of ck patch set
+	msg "fix naming schema in EXTRAVERSION of ck patch set"
   sed -i -re "s/^(.EXTRAVERSION).*$/\1 = /" "${srcdir}/${_ckpatchname}"
 
   # Patch source with ck patchset
-  msg "==> Applying ck patch"
+  msg "Applying ck patch"
   patch -Np1 -i "${srcdir}/${_ckpatchname}"
 
   # Patch source to unlock additional gcc CPU optimizatons
   # https://github.com/graysky2/kernel_gcc_patch
-  msg "==> Applying kernel_gcc_patch patch"
+  msg "Applying kernel_gcc_patch patch"
   patch -Np1 -i "${srcdir}/${_gcc_patch}"
 
   # patches for vga arbiter fix in intel systems
-  msg "==> Applying i915 VGA arbitration patch"
-  patch -p1 -i "${srcdir}/i915-vga-arbiter.patch"
+  #msg "Applying i915 VGA arbitration patch"
+  #patch -p1 -i "${srcdir}/i915-vga-arbiter.patch"
 
   # Overrides for missing acs capabilities
-  msg "==> Applying ACS override patch"
+  msg "Applying ACS override patch"
   patch -p1 -i "${srcdir}/add-acs-overrides.patch"
 
   # Clean tree and copy ARCH config over
@@ -256,8 +270,8 @@ _package() {
     install -D -m644 /dev/stdin "${pkgdir}/etc/mkinitcpio.d/${pkgbase}.preset"
 
   # install pacman hook for initramfs regeneration
-  sed "s|%PKGBASE%|${pkgbase}|g" "${srcdir}/99-linux.hook" |
-    install -D -m644 /dev/stdin "${pkgdir}/usr/share/libalpm/hooks/99-${pkgbase}.hook"
+	sed "s|%PKGBASE%|${pkgbase}|g" "${srcdir}/90-linux.hook" |
+		install -D -m644 /dev/stdin "${pkgdir}/usr/share/libalpm/hooks/90-${pkgbase}.hook"
 
   # remove build and source links
   rm -f "${pkgdir}"/lib/modules/${_kernver}/{source,build}
